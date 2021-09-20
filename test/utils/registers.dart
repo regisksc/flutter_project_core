@@ -1,4 +1,4 @@
-import 'package:flutter_project_core/core.dart';
+import 'package:mocktail/mocktail.dart';
 import 'fakes.dart';
 
 void registerFakesAndMocks() {
