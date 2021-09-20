@@ -1,6 +1,7 @@
 // Project imports:
 
 import 'package:flutter_project_core/core.dart';
+import 'package:flutter_project_core/core/exports/test_dependencies.dart';
 
 class ModelMock extends Mock with EquatableMixin implements Model {
   dynamic field;

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_project_core/core.dart';
+import 'package:flutter_project_core/core/exports/test_dependencies.dart';
 
 import '../../../../test_utils/mocks/datasource_mocks.dart';
 import '../../../../test_utils/mocks/test_mocks.dart';
