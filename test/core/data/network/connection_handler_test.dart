@@ -2,7 +2,6 @@
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:flutter_project_core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 
 // Project imports:
 

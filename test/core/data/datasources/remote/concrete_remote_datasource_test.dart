@@ -1,9 +1,5 @@
-import 'package:faker/faker.dart';
-import 'package:mocktail/mocktail.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_project_core/core.dart';
-
 // Project imports:
+import 'package:flutter_project_core/core.dart';
 import '../../../../test_utils/constants/data_type_test_constants.dart';
 import '../../../../test_utils/mocks/test_mocks.dart';
 

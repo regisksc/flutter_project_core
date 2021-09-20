@@ -1,7 +1,5 @@
 // Project imports:
 
-import 'package:mocktail/mocktail.dart';
-
 import 'package:flutter_project_core/core.dart';
 
 class ModelMock extends Mock with EquatableMixin implements Model {

@@ -1,5 +1,4 @@
 import 'package:flutter_project_core/core.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 import '../../../../test_utils/mocks/test_mocks.dart';
 
