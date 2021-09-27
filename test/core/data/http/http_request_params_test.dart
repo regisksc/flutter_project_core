@@ -1,7 +1,7 @@
+import 'package:flutter_project_core/core.dart';
 import 'package:flutter_project_core/core/exports/test_dependencies.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_project_core/core.dart';
 import '../../../utils/constants/data_type_test_constants.dart';
 
 void main() {
