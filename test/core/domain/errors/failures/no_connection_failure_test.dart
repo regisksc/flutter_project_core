@@ -8,6 +8,6 @@ void main() {
 
     // assert
     expect(failure.title, 'Falha de conexão');
-    expect(failure.message, 'Ops, algo deu errado. Tente novamente daqui uns minutos');
+    expect(failure.loggingMessage, 'Ops, algo deu errado. Tente novamente daqui uns minutos');
   });
 }
