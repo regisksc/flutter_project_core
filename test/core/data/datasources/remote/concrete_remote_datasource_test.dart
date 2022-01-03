@@ -49,7 +49,7 @@ void main() {
         mockHttpRequest().thenAnswer((_) async => Right<HttpFailure, HttpResponse>(httpResponse));
         final httpParams = HttpRequestParams(
           httpMethod: method,
-          endpoint: url,
+          url: url,
           queryParameters: query,
           body: body,
           headers: headers,
@@ -76,7 +76,7 @@ void main() {
         mockHttpRequest().thenAnswer((_) async => Right<HttpFailure, HttpResponse>(httpResponse));
         final httpParams = HttpRequestParams(
           httpMethod: method,
-          endpoint: url,
+          url: url,
           queryParameters: query,
           body: body,
           headers: headers,

@@ -1,3 +1,3 @@
-import '../../data/models/models.dart';
+import '../../../core.dart';
 
-typedef ModelSerializer = Model Function(Map<String, dynamic> map);
+typedef ModelSerializer<T extends Model> = T Function(Map<String, dynamic> map);

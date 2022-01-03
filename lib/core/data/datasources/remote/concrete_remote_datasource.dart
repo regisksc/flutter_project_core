@@ -10,7 +10,7 @@ class ConcreteRemoteDatasource implements RemoteDatasource {
 
   Future<Either<Failure, HttpResponse>> _getRawDataFromRemote(HttpRequestParams httpParams) async {
     final response = await client.request(
-      url: httpParams.endpoint,
+      url: httpParams.url,
       method: httpParams.method,
       body: httpParams.body,
       headers: httpParams.headers,

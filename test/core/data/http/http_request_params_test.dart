@@ -8,7 +8,7 @@ void main() {
     // arrange
     const httpRequestParams = HttpRequestParams(
       httpMethod: HttpMethod.get,
-      endpoint: '/teste',
+      url: '/teste',
       body: {},
       headers: {},
       queryParameters: {},
@@ -20,7 +20,7 @@ void main() {
             // ignore: prefer_const_constructors
             HttpRequestParams(
               httpMethod: HttpMethod.get,
-              endpoint: '/teste',
+              url: '/teste',
               body: const {},
               headers: const {},
               queryParameters: const {},
@@ -39,7 +39,7 @@ void main() {
     });
     HttpRequestParams mockHttpParams(HttpMethod method) => HttpRequestParams(
           httpMethod: method,
-          endpoint: faker.internet.httpsUrl(),
+          url: faker.internet.httpsUrl(),
           body: body,
           headers: headers,
           queryParameters: queryParameters,

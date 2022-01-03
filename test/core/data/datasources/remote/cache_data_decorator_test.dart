@@ -15,7 +15,7 @@ void main() {
   late HttpRequestParams httpParams;
 
   setUpAll(() {
-    httpParams = HttpRequestParams(httpMethod: HttpMethod.get, endpoint: faker.internet.httpsUrl());
+    httpParams = HttpRequestParams(httpMethod: HttpMethod.get, url: faker.internet.httpsUrl());
     registerFallbackValue(httpParams);
   });
 

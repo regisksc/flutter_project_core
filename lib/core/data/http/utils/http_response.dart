@@ -1,10 +1,10 @@
 class HttpResponse {
   HttpResponse({
-    required this.code,
+    this.code,
     this.data,
   });
 
-  final int code;
+  final int? code;
   final dynamic data; // Should be Either a List<Json> or a Json
 
   @override
