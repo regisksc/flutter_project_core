@@ -1,5 +1,4 @@
 import '../../../../core.dart';
-import '../../../resources/constants/error_strings.dart';
 
 class ForbiddenFailure extends HttpFailure {
   const ForbiddenFailure({String? message, int? code})

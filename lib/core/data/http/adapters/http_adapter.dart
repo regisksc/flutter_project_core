@@ -2,9 +2,6 @@
 import 'dart:convert';
 
 import '../../../../core.dart';
-import '../../../exports/app_dependencies.dart';
-import '../../data.dart';
-import '../http.dart';
 
 class HttpAdapter implements HttpClient {
   HttpAdapter(Dio client) : _client = client;
