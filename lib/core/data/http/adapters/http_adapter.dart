@@ -8,7 +8,7 @@ class HttpAdapter implements HttpClient {
   final Dio _client;
 
   @override
-  Future<Either<Failure, HttpResponse>> request({
+  Future<HttpResponse> request({
     required String method,
     required String url,
     Map<String, dynamic>? body,
@@ -25,13 +25,12 @@ class HttpAdapter implements HttpClient {
         queryParameters: queryParameters,
         options: options,
       );
-      return isSuccess(response?.statusCode)
-          ? Right(_handleSuccess(response!))
-          : Left(_unexpectedFailure());
+      if (isSuccess(response?.statusCode)) return _handleSuccess(response!);
+      throw const UnrecognizedFailure();
     } on DioError catch (err) {
       // ignore: avoid_print
       print(err.message);
-      return Left(_unexpectedFailure());
+      throw const UnrecognizedFailure();
     }
   }
 
@@ -59,6 +58,4 @@ class HttpAdapter implements HttpClient {
       data: decoded,
     );
   }
-
-  UnrecognizedFailure _unexpectedFailure() => const UnrecognizedFailure();
 }

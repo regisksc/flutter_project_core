@@ -10,7 +10,7 @@ class AuthorizeHttpClientDecorator implements HttpClient {
   final HttpClient _decoratee;
   final LocalStorage _localStorage;
 
-  Future<Either<Failure, HttpResponse>> request({
+  Future<HttpResponse> request({
     required String method,
     required String url,
     Map<String, dynamic>? body,
@@ -29,7 +29,7 @@ class AuthorizeHttpClientDecorator implements HttpClient {
       );
     } on Failure catch (error) {
       if (error is ForbiddenFailure) await _localStorage.delete('token');
-      return Left(error);
+      rethrow;
     }
   }
 }

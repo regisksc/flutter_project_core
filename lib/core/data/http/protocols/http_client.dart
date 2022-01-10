@@ -3,7 +3,7 @@
 import '../../../../core.dart';
 
 abstract class HttpClient {
-  Future<Either<Failure, HttpResponse>> request({
+  Future<HttpResponse> request({
     required String url,
     required String method,
     Map<String, dynamic>? body,

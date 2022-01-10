@@ -17,7 +17,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_secure_storage: ^4.2.1
-  dartz: ^0.10.0
 
 dev_dependencies:
   # Test

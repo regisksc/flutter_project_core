@@ -47,6 +47,7 @@ analyzer:
     await_only_futures: error
     camel_case_extensions: error
     camel_case_types: error
+    exhaustive_cases: error
     cancel_subscriptions: error
     cascade_invocations: error
     close_sinks: error

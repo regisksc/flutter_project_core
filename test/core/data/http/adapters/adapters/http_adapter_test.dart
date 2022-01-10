@@ -29,7 +29,7 @@ void main() {
       final future = await sut.request(url: url, method: 'invalid');
 
       // assert
-      expect(future, isA<Left>());
+      expect(future, throwsA(const UnrecognizedFailure()));
     },
   );
 
@@ -68,12 +68,10 @@ void main() {
       mockResponseForCode(httpOk, body: anyMap);
 
       // act
-      final response = await sut.request(url: url, method: httpGet);
-      final extracted = response.fold(id, id);
+      await sut.request(url: url, method: httpGet);
 
       // assert
       verify(calledRequest());
-      expect(extracted, isA<HttpResponse>());
       verifyNoMoreInteractions(client);
     },
   );
@@ -85,12 +83,11 @@ void main() {
       mockResponseForCode(httpUnauthorized);
 
       // act
-      final response = await sut.request(url: url, method: httpGet);
-      final extracted = response.fold(id, id);
+      final response = sut.request(url: url, method: httpGet);
 
       // assert
       verify(calledRequest());
-      expect(extracted, isA<UnrecognizedFailure>());
+      expect(response, throwsA(const UnrecognizedFailure()));
       verifyNoMoreInteractions(client);
     },
   );
