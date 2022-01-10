@@ -7,6 +7,6 @@ void main() {
     final httResponse = HttpResponse(code: 1, data: 1);
 
     // assert
-    expect(httResponse.toString(), "'code': 1, 'message': message, 'data': 1");
+    expect(httResponse.toString(), "'code': 1, 'data': 1");
   });
 }

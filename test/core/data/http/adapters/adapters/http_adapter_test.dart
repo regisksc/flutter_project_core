@@ -23,10 +23,10 @@ void main() {
   });
 
   test(
-    'should return a failure on unrecognized http verb',
+    'should throw a failure on unrecognized http verb',
     () async {
       // act
-      final future = await sut.request(url: url, method: 'invalid');
+      final future = sut.request(url: url, method: 'invalid');
 
       // assert
       expect(future, throwsA(const UnrecognizedFailure()));
