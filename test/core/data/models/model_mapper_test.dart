@@ -1,9 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter_project_core/core.dart';
 import 'package:flutter_project_core/core/exports/test_dependencies.dart';
-
-import '../../../utils/fixtures/fixture_reader.dart';
 
 class MappableMock extends Model {
   const MappableMock(this.field1, this.field2);

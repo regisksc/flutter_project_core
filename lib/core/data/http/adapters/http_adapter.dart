@@ -25,7 +25,9 @@ class HttpAdapter implements HttpClient {
         queryParameters: queryParameters,
         options: options,
       );
-      return isSuccess(response?.statusCode) ? Right(_handleSuccess(response!)) : Left(_unexpectedFailure());
+      return isSuccess(response?.statusCode)
+          ? Right(_handleSuccess(response!))
+          : Left(_unexpectedFailure());
     } on DioError catch (err) {
       // ignore: avoid_print
       print(err.message);
@@ -53,7 +55,7 @@ class HttpAdapter implements HttpClient {
   HttpResponse _handleSuccess(Response response) {
     final decoded = json.decode(json.encode(response.data));
     return HttpResponse(
-      code: response.statusCode!,
+      code: response.statusCode,
       data: decoded,
     );
   }
