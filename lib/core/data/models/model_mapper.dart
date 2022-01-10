@@ -1,27 +1,35 @@
 import '../../../core.dart';
 
-class ModelMapper {
-  const ModelMapper();
-
+extension ModelMapper on Map<String, dynamic> {
   Future<Output> mapOne<Output extends Model>({
-    required Map<String, dynamic> source,
     required ModelSerializer<Output> serializer,
     String? keyToMap,
   }) async {
-    //
-    throw UnimplementedError();
+    final mappingTarget = keyToMap != null ? this[keyToMap] : this;
+    if (mappingTarget == null) {
+      throw Exception('the passed keyToMap in .mapOne was not found in $this');
+    }
+    if (mappingTarget is Iterable) {
+      throw Exception('trying to map a list using api mapOne, use api mapMany instead');
+    } else {
+      return serializer(mappingTarget as Map<String, dynamic>);
+    }
   }
 
   Future<List<Output>> mapMany<Output extends Model>({
-    required Map<String, dynamic> source,
     required ModelSerializer<Output> serializer,
     String? keyToMap,
   }) async {
-    final mappingTarget = keyToMap != null ? source[keyToMap] : source;
-
+    final mappingTarget = keyToMap != null ? this[keyToMap] : this;
+    if (mappingTarget == null) {
+      throw Exception('the passed keyToMap in .mapOne was not found in $this');
+    }
     if (mappingTarget is Iterable) {
-      final mapFunction = (json) => serializer(json as Map<String, dynamic>);
-      final modelList = mappingTarget.map<Output>(mapFunction).toList();
+      final modelList = mappingTarget
+          .map<Output>(
+            (json) => serializer(json as Map<String, dynamic>),
+          )
+          .toList();
       return modelList;
     } else {
       return [serializer(mappingTarget as Map<String, dynamic>)];

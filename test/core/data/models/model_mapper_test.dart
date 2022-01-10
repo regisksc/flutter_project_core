@@ -1,69 +1,135 @@
+import 'dart:math';
+
+import 'package:faker/faker.dart';
 import 'package:flutter_project_core/core.dart';
-import 'package:flutter_project_core/core/exports/test_dependencies.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-class MappableMock extends Model {
-  const MappableMock(this.field1, this.field2);
-
-  factory MappableMock.fromJson(Map<String, dynamic> json) => MappableMock(
-        json['field1'].toString(),
-        json['field2'].toString(),
-      );
-
-  final String field1;
-  final String field2;
-
-  @override
-  List<Object?> get props => [field1, field2];
-
-  @override
-  Entity get toEntity => throw UnimplementedError();
-
-  @override
-  Map<String, dynamic> get toJson => throw UnimplementedError();
-}
+import '../../../utils/mocks/model_mock.dart';
+import '../../../utils/mocks/test_mocks.dart';
 
 void main() {
-  late ModelMapper sut;
-
-  setUpAll(() {
-    registerFallbackValue(HttpResponse());
-    registerFallbackValue(HttpRequestParams(
-      url: faker.internet.httpsUrl(),
-      httpMethod: HttpMethod.get,
-    ));
+  late Map<String, dynamic> singleMapWithKey;
+  late Map<String, dynamic> singleMapWithoutKey;
+  late Map<String, dynamic> listOfMap;
+  late String fakeName;
+  late int fakeAge;
+  setUp(() {
+    fakeName = faker.person.name();
+    fakeAge = Random().nextInt(40);
+    singleMapWithKey = {
+      'target': {
+        'name': fakeName,
+        'age': fakeAge,
+      }
+    };
+    singleMapWithoutKey = {
+      'name': fakeName,
+      'age': fakeAge,
+    };
+    listOfMap = {
+      'target': [
+        singleMapWithoutKey,
+        singleMapWithoutKey.map((key, value) => MapEntry(key, '$value 2')),
+      ]
+    };
   });
 
-  setUp(() {
-    sut = const ModelMapper();
+  group('fetch one object test group', () {
+    test(
+      'should return a given Object Type on json input when there is a key to map',
+      () async {
+        // act
+        final result = await singleMapWithKey.mapOne(
+          serializer: ModelMock.fromJson,
+          keyToMap: 'target',
+        );
+
+        // assert
+        expect(result, isA<ModelMock>());
+        expect(result.name, equals(fakeName));
+        expect(result.age, equals(fakeAge));
+      },
+    );
+
+    test(
+      'should return a given Object Type on json input when there is no key to map',
+      () async {
+        // act
+        final result = await singleMapWithoutKey.mapOne(
+          serializer: ModelMock.fromJson,
+        );
+
+        // assert
+        expect(result, isA<ModelMock>());
+        expect(result.name, equals(fakeName));
+        expect(result.age, equals(fakeAge));
+      },
+    );
+
+    test(
+      'should throw when trying to convert a single object on json LIST input',
+      () async {
+        // act
+        final result = listOfMap.mapOne(
+          serializer: ModelMock.fromJson,
+          keyToMap: 'target',
+        );
+
+        // assert
+        expect(result, throwsException);
+      },
+    );
+
+    test(
+      'should throw when trying to map an unexistant key on json input',
+      () async {
+        // arrange
+        const wrongKey = 'thisIsJustWrong';
+
+        // act
+        final result = listOfMap.mapOne(
+          serializer: ModelMock.fromJson,
+          keyToMap: wrongKey,
+        );
+
+        // assert
+        expect(result, throwsException);
+      },
+    );
   });
 
   group('fetch list test group', () {
-    late Map<String, dynamic> bannerListResponse;
-
-    setUp(() {
-      bannerListResponse = {
-        'data': [
-          {'field1': 'a', 'field2': 'a'},
-          {'field1': 'b', 'field2': 'b'},
-        ]
-      };
-    });
-
     test(
       'should return a list of given Object Type on api status 200',
       () async {
-        // arrange
-
         // act
-        final result = await sut.mapMany(
-          source: bannerListResponse,
-          serializer: MappableMock.fromJson,
-          keyToMap: 'banners',
+        final result = await listOfMap.mapMany(
+          serializer: ModelMock.fromJson,
+          keyToMap: 'target',
         );
 
         // assert
         expect(result, isA<List>());
         expect(result, isNotEmpty);
+        expect(result[0].name, equals(fakeName));
+        expect(result[1].name, equals('$fakeName 2'));
+      },
+    );
+
+    test(
+      'should throw when trying to map an unexistant key on json input',
+      () async {
+        // arrange
+        const wrongKey = 'thisIsJustWrong';
+
+        // act
+        final result = listOfMap.mapMany(
+          serializer: ModelMock.fromJson,
+          keyToMap: wrongKey,
+        );
+
+        // assert
+        expect(result, throwsException);
       },
     );
 
@@ -71,12 +137,11 @@ void main() {
       'should return a list of a single given Object Type on api status 200 when response is not a List',
       () async {
         // arrange
-        final bannerResponseItem = bannerListResponse['banners'][0];
+        final bannerResponseItem = Map<String, dynamic>.from(listOfMap['target'][0] as Map);
 
         // act
-        final result = await sut.mapMany(
-          source: bannerResponseItem as Map<String, dynamic>,
-          serializer: MappableMock.fromJson,
+        final result = await bannerResponseItem.mapMany(
+          serializer: ModelMock.fromJson,
         );
 
         // assert
